@@ -1,10 +1,12 @@
-FROM tensorflow/tensorflow
+FROM tensorflow/tensorflow:latest-gpu
 
 # To avoid user interaction when installing libraries
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Blocking module requirement to avoid using sudo
 ENV IS_IN_A_DOCKER_CONTAINER True
+
+ENV SLIPS_DIR /StratosphereLinuxIPS
 
 # Install wget and add Zeek repository to our sources.
 RUN apt update && apt install -y --no-install-recommends \
@@ -13,13 +15,12 @@ RUN apt update && apt install -y --no-install-recommends \
     git \
     curl \
     gnupg \
- && echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_18.04/ /' | tee /etc/apt/sources.list.d/security:zeek.list \
- && curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_18.04/Release.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null
+ && echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_20.04/ /' | tee /etc/apt/sources.list.d/security:zeek.list \
+ && curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_20.04/Release.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null
 
 # Install Slips dependencies.
 RUN apt update && apt install -y --no-install-recommends \
     python3 \
-    curl \
     redis-server \
     zeek \
     python3-pip \
@@ -43,7 +44,7 @@ RUN apt update && apt install -y --no-install-recommends \
 
 
 # Copy slips from the current directory into slips dir inside the container
-RUN git clone https://github.com/stratosphereips/StratosphereLinuxIPS ${SLIPS_DIR}/
+RUN git clone https://github.com/tsw303005/StratosphereLinuxIPS.git
 RUN (cd ${SLIPS_DIR} && chmod 774 slips.py)
 
 
@@ -56,14 +57,14 @@ RUN pip3 install -r ${SLIPS_DIR}/requirements.txt
 RUN pip3 install --ignore-installed tensorflow==2.4.1
 
 # Download and unpack Slips.
-RUN git clone https://github.com/stratosphereips/StratosphereLinuxIPS.git
-RUN cd StratosphereLinuxIPS && chmod 774 slips.py
+#RUN git clone https://github.com/stratosphereips/StratosphereLinuxIPS.git
+#RUN cd StratosphereLinuxIPS && chmod 774 slips.py
 
 
 
 # Upgrade pip3 and install Slips requirements
-RUN pip3 install --upgrade pip
-RUN pip3 install -r ${SLIPS_DIR}/requirements.txt
+#RUN pip3 install --upgrade pip
+#RUN pip3 install -r ${SLIPS_DIR}/requirements.txt
 
 
 # For Kalipso:
