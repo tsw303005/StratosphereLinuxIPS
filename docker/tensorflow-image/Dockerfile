@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest-gpu
+FROM nvcr.io/nvidia/tensorflow:22.08-tf2-py3
 
 # To avoid user interaction when installing libraries
 ENV DEBIAN_FRONTEND=noninteractive
