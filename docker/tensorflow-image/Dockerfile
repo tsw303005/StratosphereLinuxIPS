@@ -44,7 +44,7 @@ RUN apt update && apt install -y --no-install-recommends \
 
 
 # Copy slips from the current directory into slips dir inside the container
-RUN git clone https://github.com/tsw303005/StratosphereLinuxIPS.git
+RUN git clone https://github.com/tsw303005/StratosphereLinuxIPS.git ${SLIPS_DIR}
 RUN (cd ${SLIPS_DIR} && chmod 774 slips.py)
 
 
@@ -54,7 +54,7 @@ RUN pip3 install -r ${SLIPS_DIR}/requirements.txt
 
 
 # manually install tensorflow==2.4.1
-RUN pip3 install --ignore-installed tensorflow==2.4.1 && apt install libcusolver10
+# RUN pip3 install --ignore-installed tensorflow==2.4.1 && apt install libcusolver10
 
 # Download and unpack Slips.
 #RUN git clone https://github.com/stratosphereips/StratosphereLinuxIPS.git
