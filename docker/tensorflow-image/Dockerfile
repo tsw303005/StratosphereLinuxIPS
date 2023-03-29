@@ -40,6 +40,7 @@ RUN apt update && apt install -y --no-install-recommends \
     net-tools \
     vim \
     yara \
+    libfreetype-dev \
  && ln -s /opt/zeek/bin/zeek /usr/local/bin/bro
 
 

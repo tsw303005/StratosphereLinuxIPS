@@ -12,6 +12,7 @@ import traceback
 import numpy as np
 import sys
 from tensorflow.python.keras.models import load_model
+import tensorflow as tf
 
 
 warnings.filterwarnings('ignore', category=FutureWarning)
@@ -138,7 +139,7 @@ class Module(Module, multiprocessing.Process):
         # TODO: set the decision threshold in the function call
         try:
             # Download lstm model
-            tcpmodel = load_model(model_file)
+            tcpmodel = tf.keras.models.load_model(model_file)
         except AttributeError as e:
             self.print('Error loading the model.')
             self.print(e)
